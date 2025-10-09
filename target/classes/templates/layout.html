@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE" th:text="#{app.title}">UMarket</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" th:href="@{/css/bundle.css}" />
+    <script th:src="@{/js/bundle.js}" defer></script>
+</head>
+<body>
+<header class="navbar">
+    <a th:href="@{/}" class="logo">
+        <img th:src="@{/images/logo.png}" th:alt="#{app.title}" width="30" height="30" style="vertical-align: middle; margin-right: 0.5rem;">
+        <span>[[#{app.title}]]</span>
+    </a>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">[[#{navigation.home}]]</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="container" style="padding: 2rem;">
+    <p th:if="${MSG_SUCCESS}" style="background-color: #d4edda; color: #155724; padding: 1rem; margin-bottom: 1rem; border-radius: 5px;" role="alert">[[${MSG_SUCCESS}]]</p>
+    <p th:if="${MSG_INFO}" style="background-color: #cce5ff; color: #004085; padding: 1rem; margin-bottom: 1rem; border-radius: 5px;" role="alert">[[${MSG_INFO}]]</p>
+    <p th:if="${MSG_ERROR}" style="background-color: #f8d7da; color: #721c24; padding: 1rem; margin-bottom: 1rem; border-radius: 5px;" role="alert">[[${MSG_ERROR}]]</p>
+
+    <div layout:fragment="content"></div>
+</main>
+
+<footer>
+    <p>&copy; [[#{app.title}]]</p>
+</footer>
+</body>
+</html>

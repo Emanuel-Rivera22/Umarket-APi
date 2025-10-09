@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Inicio - UMarket</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<main class="home-container">
+    <h1>Bienvenido, <span th:text="${usuario != null} ? ${usuario.username} : 'Invitado'">Usuario</span></h1>
+
+    <div th:if="${mensajeExito != null}" class="success-message">
+        <p th:text="${mensajeExito}"></p>
+    </div>
+
+    <section>
+        <h2>Tu carrito</h2>
+        <div th:if="${carrito != null and carrito.productos != null}">
+            <p th:text="'Productos en tu carrito: ' + ${carrito.productos.size()}"></p>
+        </div>
+        <div th:if="${carrito == null or carrito.productos == null or carrito.productos.size() == 0}">
+            <p class="no-products">No tienes productos en el carrito.</p>
+        </div>
+    </section>
+    <section class="products">
+        <h2>Productos disponibles</h2>
+        <div class="product-list">
+            <div class="product-item" th:each="producto : ${productos}">
+                <img src="/images/" alt="Imagen del producto" />
+                <h3 th:text="${producto.nombre}">Nombre del producto</h3>
+                <p th:text="'$' + ${producto.precio}">Precio</p>
+                <form action="/carrito/agregar" method="post">
+                    <input type="hidden" name="productoId" th:value="${producto.id}" />
+                    <button type="submit">Agregar al carrito</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <a href="/logout" class="btn-primary">Cerrar sesión</a>
+</main>
+</body>
+</html>

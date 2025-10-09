@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UMarket - Carrito</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <div class="navbar container">
+        <a th:href="@{/}" class="logo">UMarket</a>
+        
+        <ul class="nav-links">
+            <li><a th:href="@{/}">Inicio</a></li>
+            <li><a th:href="@{/carrito}">Carrito</a></li>
+
+            <li th:if="${usuario == null}">
+                <a th:href="@{/login}" class="nav-link-button">Iniciar Sesión</a>
+            </li>
+            <li th:if="${usuario == null}">
+                <a th:href="@{/registro}" class="nav-link-button">Registro</a>
+            </li>
+            
+            <li th:if="${usuario != null}" class="logout-item">
+                <span class="user-greeting">Hola, <b th:text="${usuario.userName}"></b></span>
+                
+                <form th:action="@{/logout}" method="post" class="logout-form">
+                    <button type="submit" class="nav-logout-btn">Cerrar Sesión</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <h2>Tu Carrito</h2>
+    <div th:if="${carrito != null}">
+        <table>
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="producto : ${carrito.productos ?: {}}">
+                <td th:text="${producto.nombre}"></td>
+                <td>$<span th:text="${producto.precio}"></span></td>
+                <td>
+                    <form th:action="@{'/carrito/eliminar/' + ${producto.id}}" method="post">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h3>Total: $<span th:text="${carrito.calcularTotal()}"></span></h3>
+    </div>
+    <p th:if="${carrito == null or (carrito != null and carrito.productos.empty)}">Tu carrito está vacío.</p>
+</main>
+
+
+</body>
+</html>
