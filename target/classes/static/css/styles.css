@@ -43,18 +43,6 @@ header {
     text-decoration: none;
 }
 
-.navbar .logo img {
-    /* Estilo del logo de imagen (Si lo usas) */
-    height: 35px; 
-    width: auto;
-    vertical-align: middle; 
-    transition: transform 0.3s ease;
-}
-
-.navbar .logo img:hover {
-    transform: scale(1.05); 
-}
-
 .nav-links {
     display: flex;
     list-style: none;
@@ -74,6 +62,18 @@ header {
 .nav-links li a:hover {
     color: #ffffff; /* Brillo al pasar el ratón */
     background-color: #333; /* Fondo oscuro sutil */
+}
+
+/* ✅ AJUSTE PARA ICONO DE CARRITO (Alineación) */
+.nav-link-with-icon {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el icono, texto y conteo */
+    gap: 5px; /* Pequeño espacio entre el icono y la palabra "Carrito" */
+}
+
+.nav-link-with-icon .fa-cart-shopping {
+    font-size: 1rem;
+    color: inherit;
 }
 
 /* Enlaces que actúan como botones (Iniciar Sesión, Registro) */
@@ -141,7 +141,6 @@ header {
     color: #ffffff; 
     border-color: #ff5a5f; 
 }
-
 
 /* --- Estilos Hero --- */
 
@@ -331,7 +330,6 @@ header {
     color: #ffffff;
 }
 
-
 /* --- ESTILOS ESPECÍFICOS PARA LOGIN Y REGISTRO (DISEÑO DE TARJETA) --- */
 
 .login-body { 
@@ -413,7 +411,7 @@ header {
     border: 1px solid #155724;
 }
 
-/* --- Estilos de Carrito --- */
+/* --- Estilos de Carrito (VIEW) --- */
 
 .cart-container {
     max-width: 800px;
@@ -469,6 +467,7 @@ header {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-weight: bold;
 }
 
 .btn-remove:hover {
@@ -491,6 +490,7 @@ header {
     gap: 15px;
     margin-top: 2rem;
 }
+
 
 /* --- Estilos de Detalle de Producto --- */
 
@@ -660,5 +660,25 @@ footer {
 
     .product-price-large {
         font-size: 1.8rem;
+    }
+    
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cart-item img {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .cart-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .cart-controls .btn-primary,
+    .cart-controls .btn-secondary {
+        width: 100%;
     }
 }

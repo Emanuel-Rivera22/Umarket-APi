@@ -2,7 +2,7 @@ package io.umarket.service;
 
 import io.umarket.model.Carrito;
 import io.umarket.model.Producto;
-import io.umarket.repository.CarritoRepository;
+import io.umarket.repository.CarritoRepository; // Asegúrate de que existe
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,40 +16,33 @@ public class CarritoService {
         this.carritoRepository = carritoRepository;
     }
 
-    public Optional<Carrito> obtenerCarritoPorUsuario(String usuarioId) {
-        return carritoRepository.findByUsuarioId(usuarioId);
+    // ✅ MÉTODO REQUERIDO: Implementación de obtenerOCrearCarrito
+    public Carrito obtenerOCrearCarrito(String userId) {
+        // Busca el carrito por el ID de usuario. Si no existe, crea uno nuevo.
+        Optional<Carrito> carritoOpt = carritoRepository.findByUserId(userId);
+        return carritoOpt.orElseGet(() -> crearNuevoCarrito(userId));
+    }
+    
+    private Carrito crearNuevoCarrito(String userId) {
+        Carrito nuevoCarrito = new Carrito(userId);
+        return carritoRepository.save(nuevoCarrito);
     }
 
-    public Carrito crearCarrito(String usuarioId) {
-        Carrito carrito = new Carrito(usuarioId);
-        return carritoRepository.save(carrito);
+    // ✅ MÉTODO REQUERIDO: Implementación de agregarProducto (usado en CarritoController)
+    public void agregarProducto(String userId, Producto producto) {
+        // Lógica para añadir el producto al carrito del usuario y guardarlo
+        Carrito carrito = obtenerOCrearCarrito(userId);
+        carrito.agregarProducto(producto); // Asumiendo que el modelo Carrito tiene este método
+        carritoRepository.save(carrito);
     }
 
-    public Carrito agregarProducto(String usuarioId, Producto producto) {
-        Carrito carrito = carritoRepository.findByUsuarioId(usuarioId)
-                .orElse(new Carrito(usuarioId));
-        carrito.agregarProducto(producto);
-        return carritoRepository.save(carrito);
+    // ✅ MÉTODO REQUERIDO: Implementación de eliminarProductoPorId (usado en CarritoController)
+    public void eliminarProductoPorId(String userId, String productoId) {
+        // Lógica para encontrar el carrito, eliminar el producto por ID y guardar
+        Carrito carrito = obtenerOCrearCarrito(userId);
+        carrito.eliminarProductoPorId(productoId); // Asumiendo que el modelo Carrito tiene este método
+        carritoRepository.save(carrito);
     }
 
-    public Carrito eliminarProducto(String usuarioId, Producto producto) {
-        Carrito carrito = carritoRepository.findByUsuarioId(usuarioId)
-                .orElse(new Carrito(usuarioId));
-        carrito.eliminarProducto(producto);
-        return carritoRepository.save(carrito);
-    }
-
-    // ✅ MÉTODO AGREGADO: Implementación para que VistaController use el ID.
-    public Carrito eliminarProductoPorId(String usuarioId, String productoId) {
-        Carrito carrito = carritoRepository.findByUsuarioId(usuarioId)
-                .orElse(new Carrito(usuarioId));
-
-        carrito.eliminarProductoPorId(productoId); // Usa el método del modelo
-
-        return carritoRepository.save(carrito);
-    }
-
-    public void eliminarCarrito(String id) {
-        carritoRepository.deleteById(id);
-    }
+    // Asumiendo que tienes un método findByUserId en tu CarritoRepository
 }

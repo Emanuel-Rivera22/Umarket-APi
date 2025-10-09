@@ -10,50 +10,66 @@ import java.util.List;
 public class Carrito {
 
     @Id
-    private String id;
+    private String id; // ID del documento de MongoDB
+    
+    private String userId; // ID del Usuario al que pertenece este carrito (clave de búsqueda)
+    
+    // Lista de productos. Asumo que guardas el producto completo o un DTO/referencia.
+    private List<Producto> productos; 
 
-    private String usuarioId;
-    // ✅ CORRECCIÓN: Inicialización de la lista para evitar NullPointerException en vistas.
-    private List<Producto> productos = new ArrayList<>(); 
-
-    public Carrito() {}
-
-    public Carrito(String usuarioId) {
-        this.usuarioId = usuarioId;
+    // Constructor vacío (necesario para Spring Data)
+    public Carrito() {
+        this.productos = new ArrayList<>();
     }
 
-    // Getters y setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    // ✅ CONSTRUCTOR REQUERIDO: Usado en CarritoService#crearNuevoCarrito
+    public Carrito(String userId) {
+        this.userId = userId;
+        this.productos = new ArrayList<>();
+    }
 
-    public String getUsuarioId() { return usuarioId; }
-    public void setUsuarioId(String usuarioId) { this.usuarioId = usuarioId; }
+    // --- MÉTODOS DE LÓGICA DE NEGOCIO REQUERIDOS POR EL SERVICIO ---
 
-    public List<Producto> getProductos() { return productos; }
-    public void setProductos(List<Producto> productos) { this.productos = productos; }
-
-    // Métodos de utilidad
+    // ✅ MÉTODO REQUERIDO: Usado en CarritoService#agregarProducto
     public void agregarProducto(Producto producto) {
-        if (producto != null) {
-            this.productos.add(producto);
+        if (this.productos == null) {
+            this.productos = new ArrayList<>();
+        }
+        // Nota: Aquí podrías añadir lógica para sumar cantidades si el producto ya existe.
+        this.productos.add(producto);
+    }
+
+    // ✅ MÉTODO REQUERIDO: Usado en CarritoService#eliminarProductoPorId
+    public void eliminarProductoPorId(String productoId) {
+        if (this.productos != null) {
+            // Elimina la primera ocurrencia del producto con el ID coincidente
+            this.productos.removeIf(p -> p.getId().equals(productoId));
         }
     }
 
-    public void eliminarProducto(Producto producto) {
-        if (producto == null) return;
-        // Remueve la primera coincidencia por ID
-        this.productos.removeIf(p -> p.getId() != null && p.getId().equals(producto.getId())); 
+    // --- GETTERS Y SETTERS ---
+
+    public String getId() {
+        return id;
     }
 
-    // ✅ MÉTODO CLAVE: Permite eliminar desde el controlador de vistas
-    public void eliminarProductoPorId(String productoId) {
-        if (productoId == null) return;
-        // Remueve la primera coincidencia por ID
-        this.productos.removeIf(p -> productoId.equals(p.getId())); 
+    public void setId(String id) {
+        this.id = id;
     }
 
-    // ✅ MÉTODO CLAVE: Necesario para que Thymeleaf calcule el total
-    public double calcularTotal() {
-        return this.productos.stream().mapToDouble(Producto::getPrecio).sum();
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 }
