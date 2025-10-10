@@ -52,10 +52,10 @@ public class CarritoController {
         
         try {
             carritoService.agregarProducto(usuario.getId(), producto);
-            // SINTAXIS CORREGIDA: Usando solo los valores
+            // Ya estaba correcta
             redirectAttributes.addFlashAttribute("mensajeExito", "Producto añadido al carrito con éxito.");
         } catch (Exception e) {
-            // SINTAXIS CORREGIDA: Usando solo los valores
+            // Ya estaba correcta
             redirectAttributes.addFlashAttribute("mensajeError", "No se pudo añadir el producto al carrito.");
         }
         
@@ -67,8 +67,8 @@ public class CarritoController {
      */
     @PostMapping("/carrito/eliminar/{productoId}")
     public String eliminarDelCarrito(@PathVariable String productoId, 
-                                   Principal principal, 
-                                   RedirectAttributes redirectAttributes) {
+                                    Principal principal, 
+                                    RedirectAttributes redirectAttributes) {
 
         if (principal == null) {
             return "redirect:/login";
@@ -86,10 +86,11 @@ public class CarritoController {
         try {
             // El servicio de carrito se encarga de buscar el producto y eliminarlo
             carritoService.eliminarProductoPorId(usuario.getId(), productoId);
-            // SINTAXIS CORREGIDA: Usando solo los valores
+            
+            // 🛑 CORRECCIÓN APLICADA: Sintaxis de addFlashAttribute
             redirectAttributes.addFlashAttribute("mensajeExito", "Producto eliminado del carrito.");
         } catch (Exception e) {
-            // SINTAXIS CORREGIDA: Usando solo los valores
+            // 🛑 CORRECCIÓN APLICADA: Sintaxis de addFlashAttribute
             redirectAttributes.addFlashAttribute("mensajeError", "No se pudo eliminar el producto del carrito.");
         }
 
