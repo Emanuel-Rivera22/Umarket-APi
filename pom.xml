@@ -59,10 +59,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
+=======
+>>>>>>> f584651063845f4c71ddecb46a261304fe6341b7
     </dependencies>
 
     <build>

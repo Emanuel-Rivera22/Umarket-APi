@@ -681,6 +681,7 @@ footer {
     .cart-controls .btn-secondary {
         width: 100%;
     }
+<<<<<<< HEAD
     .tabla-productos {
     width: 100%;
     border-collapse: collapse;
@@ -712,4 +713,6 @@ footer {
 .tabla-productos .btn:hover {
     background-color: #2980b9;
 }
+=======
+>>>>>>> f584651063845f4c71ddecb46a261304fe6341b7
 }

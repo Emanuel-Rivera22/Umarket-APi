@@ -14,12 +14,18 @@
         <a th:href="@{/}" class="logo">UMarket</a> 
         
         <ul class="nav-links">
+<<<<<<< HEAD
             <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                 <a th:href="@{/admin/productos}" class="nav-link-button">Panel Admin</a>
             </li>
 
             <li><a th:href="@{/}">Inicio</a></li>
 
+=======
+            
+            <li><a th:href="@{/}">Inicio</a></li> 
+            
+>>>>>>> f584651063845f4c71ddecb46a261304fe6341b7
             <li><a th:href="@{/carrito}">Carrito</a></li>
 
             <li th:if="${usuario == null}">
