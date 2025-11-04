@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Umarket | Carrito de Compras</title>
+    
+    <div th:replace="~{fragments/header :: head}"></div> 
+
+</head>
+<body>
+
+    <div th:replace="~{fragments/header :: header}"></div> 
+
+    <div class="container">
+        
+        <div class="cart-container">
+            <h2 class="mb-4">Tu Carrito de Compras</h2>
+            
+            <div th:if="${mensajeExito}" class="alert success" th:text="${mensajeExito}"></div>
+            <div th:if="${mensajeError}" class="alert error" th:text="${mensajeError}"></div>
+
+            <div th:if="${carrito != null and not #lists.isEmpty(carrito.productos)}">
+                
+                <div class="cart-items">
+                    
+                    <div class="cart-item" th:each="producto : ${carrito.productos}">
+                        
+                        <div class="item-details">
+                            <h4 th:text="${producto.nombre}">Nombre Producto</h4>
+                            <p>Precio Unitario: <span th:text="${#numbers.formatDecimal(producto.precio, 0, 'COMMA', 2, 'POINT')}">199.99</span></p>
+                        </div>
+                        
+                        <form th:action="@{/carrito/eliminar/{id}(id=${producto.id})}" method="post">
+                            <button type="submit" class="btn-remove">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="cart-total">
+                    Total: <span th:text="${#numbers.formatDecimal(00.00, 0, 'COMMA', 2, 'POINT')}">00.00</span> 
+                </div>
+
+                <div class="cart-controls">
+                    <a href="/" class="btn btn-secondary">Seguir Comprando</a>
+                    <button class="btn btn-primary" disabled>Proceder al Pago</button>
+                </div>
+
+            </div>
+
+            <div th:if="${carrito == null or #lists.isEmpty(carrito.productos)}" class="text-center p-5">
+                <h3 class="text-muted" style="color:#bbb;">¡Tu carrito está vacío!</h3>
+                <p style="margin-top: 15px;">Parece que aún no has añadido ningún producto.</p>
+                <a href="/" class="btn btn-primary" style="margin-top: 20px;">Ver Productos</a>
+            </div>
+            
+        </div>
+        
+    </div>
+    <div th:replace="~{fragments/footer :: footer}"></div> 
+
+</body>
+</html>

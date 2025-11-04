@@ -1,0 +1,45 @@
+services:
+  db:
+    image: mongo:latest
+    container_name: umarket_mongodb
+    ports:
+      - "27017:27017"
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: umarket_backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://db:27017/umarket_db
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - db
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: umarket_worker
+    
+    # Mapeo de puerto para la depuración remota (Debugging)
+    ports:
+      - "8000:8000" 
+      
+    # Bloque 'environment'
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://db:27017/umarket_db
+      
+    # 🛑 CRÍTICO: Comando para ejecutar SOLO la clase WorkerApplication.
+    # El classpath '-cp /app.jar' permite a Java encontrar el JAR ejecutable,
+    # y la última parte define la clase principal a ejecutar.
+    command: [
+      "java", 
+      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000",
+      "-cp", "/app.jar", 
+      "io.umarket.worker.WorkerApplication" 
+    ]
+    depends_on:
+      - db
