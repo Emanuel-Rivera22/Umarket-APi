@@ -1,0 +1,32 @@
+io\umarket\repository\CarritoRepository.class
+io\umarket\repository\UsuarioRepository.class
+<<<<<<< HEAD
+io\umarket\worker\WorkerApplication.class
+=======
+>>>>>>> f584651063845f4c71ddecb46a261304fe6341b7
+io\umarket\controller\VistaController.class
+io\umarket\util\WebAdvice.class
+io\umarket\model\Usuario.class
+io\umarket\model\Carrito.class
+io\umarket\controller\ProductoController.class
+<<<<<<< HEAD
+io\umarket\controller\RegistroController.class
+=======
+>>>>>>> f584651063845f4c71ddecb46a261304fe6341b7
+io\umarket\service\CarritoService.class
+io\umarket\UmarketApplication.class
+io\umarket\service\CustomUserDetailsService.class
+io\umarket\service\UsuarioService.class
+<<<<<<< HEAD
+io\umarket\config\WebConfig.class
+=======
+>>>>>>> f584651063845f4c71ddecb46a261304fe6341b7
+io\umarket\config\ControllerConfig.class
+io\umarket\model\Producto.class
+io\umarket\service\ProductoService.class
+io\umarket\config\LocalDevConfig.class
+io\umarket\controller\UsuarioController.class
+io\umarket\util\WebUtils.class
+io\umarket\repository\ProductoRepository.class
+io\umarket\controller\CarritoController.class
+io\umarket\config\SecurityConfig.class
