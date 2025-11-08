@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-UmarketApplication<Umarket>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "io.umarket.UmarketApplication",
+            "projectName": "Umarket",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

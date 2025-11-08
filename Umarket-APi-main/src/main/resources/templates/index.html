@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMarket</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="navbar container">
+        <a th:href="@{/}" class="logo">UMarket</a> 
+        
+        <ul class="nav-links">
+            <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                <a th:href="@{/admin/productos}" class="nav-link-button">Panel Admin</a>
+            </li>
+
+            <li><a th:href="@{/}">Inicio</a></li>
+
+            <li><a th:href="@{/pedidos}">Carrito</a></li>
+
+            <li th:if="${usuario == null}">
+                <a th:href="@{/login}" class="nav-link-button">Iniciar Sesión</a>
+            </li>
+            <li th:if="${usuario == null}">
+                <a th:href="@{/registro}" class="nav-link-button">Registro</a>
+            </li>
+            
+            <li th:if="${usuario != null}" class="logout-item">
+                <span class="user-greeting">Hola, <b th:text="${usuario.userName}"></b></span>
+                
+                <form th:action="@{/logout}" method="post" class="logout-form">
+                    <button type="submit" class="nav-logout-btn">Cerrar Sesión</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</header>
+<main>
+    <h2>Catálogo de Productos</h2>
+    <div class="productos">
+        <div th:each="producto : ${productos}" class="producto">
+            <img th:src="${producto.imagenUrl}" alt="Imagen producto">
+            <h3 th:text="${producto.nombre}"></h3>
+            <p th:text="${producto.descripcion}"></p>
+            <p><b>$</b><span th:text="${producto.precio}"></span></p>
+            <form th:action="@{'/pedido/agregar/' + ${producto.id}}" method="post" th:if="${usuario != null}">
+                <button type="submit">Agregar al carrito</button>
+            </form>
+            <p th:if="${usuario == null}">Inicia sesión para comprar</p>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
